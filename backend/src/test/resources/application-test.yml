@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: fincore-banking-test
+
+  datasource:
+    url: jdbc:h2:mem:fincore_test_db;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1
+    username: sa
+    password: ""
+    driver-class-name: org.h2.Driver
+    hikari:
+      pool-name: FinCore-Test-HikariCP
+      maximum-pool-size: 5
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    open-in-view: false
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+
+fincore:
+  security:
+    jwt:
+      secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      issuer: fincore-test-issuer
+      audience: fincore-test-clients
+      access-token-expiration-ms: 60000 # 1 minute for tests
+      refresh-token-expiration-ms: 300000 # 5 minutes for tests
+    rate-limit:
+      enabled: false # Disabled by default in general tests to avoid false positives; tested explicitly in specific rate limiting test
+      capacity: 5
+      refill-tokens: 5
+      refill-duration-seconds: 60
+
+logging:
+  level:
+    root: WARN
+    com.fincore.platform: INFO
+    org.springframework.security: WARN
+

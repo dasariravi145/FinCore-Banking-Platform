@@ -1,0 +1,56 @@
+# FinCore Banking Platform - Git Ignore Rules
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE & Editor files
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+*~
+.settings/
+.project
+.classpath
+
+# Build artifacts
+backend/target/
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Logs
+logs/
+*.log
+
+# Environment variables & secrets (NEVER commit real credentials)
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.jks
+*.p12
+
+# Test output & coverage
+backend/test-output/
+backend/.nyc_output/
+backend/coverage/
+
+# Temporary files
+tmp/
+temp/
+
+
+# FinCore local Docker secrets
+.env.docker
+devops-configurations-backup/
+/backend/src/main/java/com/fincore/platform/bootstrap/LocalAdminPasswordReset.java
+/LocalAdminBootstrap.java.backup
+*.tsbuildinfo
+/.env.example

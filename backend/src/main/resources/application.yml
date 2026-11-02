@@ -1,0 +1,68 @@
+spring:
+  application:
+    name: fincore-banking-backend
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:local}
+
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /
+  error:
+    include-message: never
+    include-binding-errors: never
+    include-stacktrace: never
+    include-exception: false
+
+# Management / Actuator configuration
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when_authorized
+      probes:
+        enabled: true
+      roles: ROLE_ADMIN
+  info:
+    env:
+      enabled: false
+
+# OpenAPI / Swagger configuration
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui/index.html
+    enabled: true
+    operationsSorter: method
+    tagsSorter: alpha
+    tryItOutEnabled: true
+  show-actuator: true
+
+# FinCore Application Specific Configurations
+fincore:
+  security:
+    jwt:
+      secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+      issuer: ${JWT_ISSUER:fincore-banking-platform}
+      audience: ${JWT_AUDIENCE:fincore-banking-clients}
+      access-token-expiration-ms: ${JWT_ACCESS_EXPIRATION_MS:900000} # 15 minutes
+      refresh-token-expiration-ms: ${JWT_REFRESH_EXPIRATION_MS:604800000} # 7 days
+    rate-limit:
+      enabled: ${RATE_LIMIT_ENABLED:true}
+      capacity: ${RATE_LIMIT_CAPACITY:20}
+      refill-tokens: ${RATE_LIMIT_REFILL_TOKENS:20}
+      refill-duration-seconds: ${RATE_LIMIT_REFILL_DURATION_SECONDS:60}
+    cors:
+      allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,http://localhost:5173,http://localhost:8080}
+      allowed-methods: GET,POST,PUT,PATCH,DELETE,OPTIONS
+      allowed-headers: Authorization,Content-Type,X-Correlation-ID,Accept,Origin
+      exposed-headers: X-Correlation-ID,Authorization
+      allow-credentials: true
+      max-age-seconds: 3600
+
