@@ -1,6 +1,6 @@
 variable "project" {
  
-     defult = "fincorebank"
+     default = "fincorebank"
 
 }
 
