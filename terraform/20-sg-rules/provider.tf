@@ -7,6 +7,11 @@ terraform {
     }
   }
 
+  http = {
+      source  = "hashicorp/http"
+      version = "~> 3.0"
+  }
+
   backend "s3" {
     bucket       = "fincore-bank-state-aws-terraform"
     key          = "fincorebank-dev-sg-rules"
@@ -14,6 +19,8 @@ terraform {
     encrypt      = true
     use_lockfile = true
   }
+
+  
 }
 
 provider "aws" {
